@@ -1,0 +1,25 @@
+table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    margin: 0;
+}
+table { border-collapse: collapse; }
+td { width: 60px; height: 30px; border: 1px solid #000; }
+.block { background-color: #ffff00; } /* Orange color for blocks */
+.water { background-color: rgb(0,176,240); } /* Blue color for water */
+#waterStored { font-weight: bold; background-color: aliceblue;
+    margin-right: 70%; margin-left: 2%;}
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-style: inherit;
+    color:rgb(8, 1, 1);
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color:aliceblue
+}
