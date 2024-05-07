@@ -1,40 +1,53 @@
+import java.util.*;
 
-public class MaxProfitProblem {
-    public static void main(String[] args) {
-        System.out.println(maxProfit(7)); // Output: Earnings: 3000, Properties: T: 1 P: 0 C: 0
-        System.out.println(maxProfit(8)); // Output: Earnings: 4500, Properties: T: 1 P: 0 C: 0
-        System.out.println(maxProfit(13)); // Output: Earnings: 16500, Properties: T: 2 P: 0 C: 0
+class LandDevelopment {
+    static class Building {
+        String type;
+        int time;
+        int earning;
+
+        Building(String type, int time, int earning) {
+            this.type = type;
+            this.time = time;
+            this.earning = earning;
+        }
     }
 
-    public static String maxProfit(int timeUnits) {
-        int[] dp = new int[timeUnits + 1];
-        Arrays.fill(dp, 0);
+    public static void main(String[] args) {
+        // Define the buildings: Theatre, Pub, and Commercial Park
+        Building theatre = new Building("Theatre", 5, 1500);
+        Building pub = new Building("Pub", 4, 1000);
+        Building commercialPark = new Building("Commercial Park", 10, 3000);
+        int timeUnits = 13;
+        int theatreCount = 0;
+        int pubCount = 0;
+        int commercialParkCount = 0;
 
-        // Initialize variables to store the number of properties developed
-        int theaters = 0, pubs = 0, parks = 0;
+        // Calculate the maximum profit
+        int maxProfit = 0;
 
-        for (int i = 1; i <= timeUnits; i++) {
-            // Calculate the maximum profit at current time unit
-            int maxProfit = dp[i];
-            if (i >= 5 && dp[i - 5] + 1500 > maxProfit) {
-                maxProfit = dp[i - 5] + 1500;
-                theaters = theaters + 1;
-            }
-            if (i >= 4 && dp[i - 4] + 1000 > maxProfit) {
-                maxProfit = dp[i - 4] + 1000;
-                theaters = 0;
-                pubs = pubs + 1;
-            }
-            if (i >= 10 && dp[i - 10] + 3000 > maxProfit) {
-                maxProfit = dp[i - 10] + 3000;
-                theaters = 0;
-                pubs = 0;
-                parks = parks + 1;
-            }
+        // Try all possible combinations of buildings
+        for (int t = 0; t <= timeUnits; t++) {
+            for (int p = 0; p <= timeUnits - t; p++) {
+                int c = timeUnits - t - p; // Remaining time for Commercial Park
 
-            dp[i] = maxProfit;
+                // Calculate earnings for this combination
+                int totalEarnings = t * theatre.earning + p * pub.earning + c * commercialPark.earning;
+
+                // Update maxProfit if this combination yields higher earnings
+                if (totalEarnings > maxProfit) {
+                    maxProfit = totalEarnings;
+                    theatreCount = t;
+                    pubCount = p;
+                    commercialParkCount = c;
+                }
+            }
         }
 
-        return "Earnings: " + dp[timeUnits] + ", Properties: T: " + theaters + " P: " + pubs + " C: " + parks;
+        // Output the solution
+        System.out.println("Time Unit: " + timeUnits);
+        System.out.println("Earnings: $" + maxProfit);
+        System.out.println("Solutions:");
+        System.out.println("T: " + theatreCount + " P: " + pubCount + " C: " + commercialParkCount);
     }
 }
